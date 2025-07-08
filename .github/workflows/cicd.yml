@@ -1,0 +1,49 @@
+# build the react solution and test
+name: React CI/CD
+on:
+  push:
+    branches:
+      - main
+      - trunk
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+      - trunk
+# we need these permissions to deploy the react template to github pages
+permissions:
+  id-token: write
+  pages: write
+  contents: read
+jobs:
+    build:
+        if: github.event.pull_request.draft == false
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v4.2.2
+        - name: Use Node.js 22.x
+          uses: actions/setup-node@v4.3.0
+          with:
+            node-version: 22.x
+        - name: Install dependencies
+          run: npm ci
+        - name: Build
+          run: npm run build
+        - name: Test
+          run: npm run test
+        - name: Update
+          run: echo "✅ npm ci, test and build completed" | tee -a $GITHUB_STEP_SUMMARY
+
+          # if you configure your repository to use GitHub Pages, you can deploy the build output to GitHub Pages
+          # uncomment the following steps to enable GitHub Pages deployment
+        # - name: upload pages artifact
+        #   uses:  actions/upload-pages-artifact@v3.0.1
+        #   with:
+        #     path: ${{ github.workspace }}/dist/
+        # - name: deploy pages artifact
+        #   id: deploy-pages-artifact
+        #   uses: actions/deploy-pages@v4.0.5
+        # - name: show deployed url
+        #   run: |
+        #     # show deployed URL for github pages
+        #     echo "📚 Deployed pages to ${{ steps.deploy-pages-artifact.outputs.page_url }}" | tee -a $GITHUB_STEP_SUMMARY
