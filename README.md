@@ -1,5 +1,9 @@
 # ahsan-he-is
 
+[![React CI/CD](https://github.com/davidpayne-au/ahsan-he-is/actions/workflows/cicd.yml/badge.svg)](https://github.com/davidpayne-au/ahsan-he-is/actions/workflows/cicd.yml)
+
+[Github Pages site](https://davidpayne-au.github.io/ahsan-he-is/)
+
 This is a React app in typescript created by vite ready for you to customise and extend.
 
 It includes:
